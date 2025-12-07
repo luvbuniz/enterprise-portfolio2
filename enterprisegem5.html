@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amy Sullivan | Enterprise AI Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'charcoal': '#1a1a1a',
+                        'slate-dark': '#0f1419',
+                        'warm-white': '#f7f5f2',
+                        'accent': '#c9a227',
+                        'accent-light': '#e8d48a',
+                        'muted': '#9ca3af',
+                    },
+                    fontFamily: {
+                        'display': ['Instrument Serif', 'Georgia', 'serif'],
+                        'body': ['DM Sans', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #c9a227 0%, #e8d48a 50%, #c9a227 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(201, 162, 39, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .stat-card {
+            background: linear-gradient(145deg, rgba(201, 162, 39, 0.05) 0%, rgba(201, 162, 39, 0.01) 100%);
+            border: 1px solid rgba(201, 162, 39, 0.15);
+        }
+        
+        .line-accent {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #c9a227, transparent);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+        
+        /* Interactive Background Canvas */
+        #networkCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Behind everything */
+            opacity: 0.5;
+            pointer-events: none; /* Let clicks pass through */
+        }
+        
+        .content-layer {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-slate-dark text-warm-white font-body antialiased selection:bg-accent selection:text-charcoal">
+    
+    <!-- Wow Factor: Neural Network Background -->
+    <canvas id="networkCanvas"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-dark/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="font-display text-2xl tracking-tight italic">Amy Sullivan<span class="text-accent">.</span></a>
+            <div class="hidden md:flex gap-8 text-sm tracking-widest uppercase font-medium">
+                <a href="#services" class="text-muted hover:text-accent transition-colors">Capabilities</a>
+                <a href="#results" class="text-muted hover:text-accent transition-colors">Impact</a>
+                <a href="#about" class="text-muted hover:text-accent transition-colors">About</a>
+                <a href="#contact" class="px-4 py-2 border border-accent/30 text-accent rounded-sm hover:bg-accent hover:text-charcoal transition-all">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden content-layer">
+        <!-- Ambient Glows -->
+        <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[100px] -z-10"></div>
+        <div class="absolute bottom-1/4 left-1/4 w-64 h-64 bg-accent/5 rounded-full blur-[80px] -z-10"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/20 bg-accent/5 mb-8 animate-in delay-1 backdrop-blur-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="text-xs font-medium uppercase tracking-widest text-accent-light">Enterprise Consultant</span>
+            </div>
+
+            <!-- Adjusted Font Size: Reduced from text-5xl/7xl to text-4xl/6xl for a more refined look -->
+            <h1 class="font-display text-4xl md:text-6xl leading-[1.1] mb-6 animate-in delay-2">
+                Operationalizing <br/>
+                <span class="gradient-text italic">Enterprise Intelligence</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed mb-10 animate-in delay-3">
+                I architect scalable, <span class="text-warm-white font-medium">audit-ready AI workflows</span> that transform fragmented tools into reliable business engines.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-5 justify-center animate-in delay-4">
+                <a href="#contact" class="px-8 py-4 bg-accent text-charcoal font-bold tracking-wide hover:bg-accent-light transition-all rounded-sm shadow-lg shadow-accent/20">
+                    Partner With Me
+                </a>
+                <a href="#services" class="px-8 py-4 border border-white/20 hover:border-accent/50 hover:bg-white/5 transition-all rounded-sm backdrop-blur-sm">
+                    View Architecture
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section id="results" class="border-y border-white/5 bg-charcoal/50 content-layer">
+        <div class="max-w-6xl mx-auto px-6 py-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+                <div class="group">
+                    <p class="font-display text-4xl md:text-5xl gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">75%</p>
+                    <p class="text-muted text-xs uppercase tracking-widest">Process Efficiency Gain</p>
+                </div>
+                <div class="group">
+                    <p class="font-display text-4xl md:text-5xl gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">78w</p>
+                    <p class="text-muted text-xs uppercase tracking-widest">Curriculum Deployed</p>
+                </div>
+                <div class="group">
+                    <p class="font-display text-4xl md:text-5xl gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">100%</p>
+                    <p class="text-muted text-xs uppercase tracking-widest">Workflow Repeatability</p>
+                </div>
+                <div class="group">
+                    <p class="font-display text-4xl md:text-5xl gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">4+</p>
+                    <p class="text-muted text-xs uppercase tracking-widest">Models Orchestrated</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities / Services -->
+    <section id="services" class="py-24 md:py-32 content-layer">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-16">
+                <div class="line-accent mb-6"></div>
+                <h2 class="font-display text-4xl md:text-5xl mb-4">Core Capabilities</h2>
+                <p class="text-muted text-lg max-w-xl">Strategic implementation for organizations ready to move beyond experimentation.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Service 1 -->
+                <div class="stat-card rounded-lg p-8 card-hover group">
+                    <div class="flex justify-between items-start mb-6">
+                        <i data-lucide="brain-circuit" class="text-accent w-8 h-8 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-bold text-accent/50 uppercase tracking-widest">01</span>
+                    </div>
+                    <h3 class="font-display text-2xl mb-4 text-warm-white">Enterprise AI Training</h3>
+                    <p class="text-muted leading-relaxed mb-6 text-sm">
+                        Hands-on training programs that get your team proficient with Frontier Models (Claude, GPT-4, Gemini). Practical workflows for Monday morning deployment.
+                    </p>
+                    <ul class="space-y-2 text-sm text-muted/80">
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Role-specific Workflow Design</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Output Validation & Compliance</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="stat-card rounded-lg p-8 card-hover group">
+                    <div class="flex justify-between items-start mb-6">
+                        <i data-lucide="workflow" class="text-accent w-8 h-8 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-bold text-accent/50 uppercase tracking-widest">02</span>
+                    </div>
+                    <h3 class="font-display text-2xl mb-4 text-warm-white">Workflow Automation</h3>
+                    <p class="text-muted leading-relaxed mb-6 text-sm">
+                        Custom pipelines for content, reporting, and operations. I build systems that are repeatable, auditable, and platform-agnostic.
+                    </p>
+                    <ul class="space-y-2 text-sm text-muted/80">
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Multi-model Architecture</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Process Documentation (SOPs)</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="stat-card rounded-lg p-8 card-hover group">
+                    <div class="flex justify-between items-start mb-6">
+                        <i data-lucide="bar-chart-3" class="text-accent w-8 h-8 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-bold text-accent/50 uppercase tracking-widest">03</span>
+                    </div>
+                    <h3 class="font-display text-2xl mb-4 text-warm-white">Model Evaluation Strategy</h3>
+                    <p class="text-muted leading-relaxed mb-6 text-sm">
+                        Not all LLMs are equal. I benchmark Claude vs. GPT vs. Grok for your specific use cases—optimizing for cost, speed, and accuracy.
+                    </p>
+                    <ul class="space-y-2 text-sm text-muted/80">
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Hallucination Rate Analysis</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Cost-Performance Audits</li>
+                    </ul>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="stat-card rounded-lg p-8 card-hover group">
+                    <div class="flex justify-between items-start mb-6">
+                        <i data-lucide="layers" class="text-accent w-8 h-8 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-bold text-accent/50 uppercase tracking-widest">04</span>
+                    </div>
+                    <h3 class="font-display text-2xl mb-4 text-warm-white">Content Production Systems</h3>
+                    <p class="text-muted leading-relaxed mb-6 text-sm">
+                        End-to-end pipelines for presentations, video scripts, and documentation. Moving from "one-off" creations to scaled production.
+                    </p>
+                    <ul class="space-y-2 text-sm text-muted/80">
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Presentation Architecture</li>
+                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-accent rounded-full"></span> Video & Voice Pipelines</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Proficiency (The Reframe) -->
+    <section class="py-24 md:py-32 border-y border-white/5 bg-charcoal/30 content-layer">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="mb-16 text-center">
+                <p class="text-accent text-xs tracking-[0.3em] uppercase mb-4">Technological Proficiency</p>
+                <h2 class="font-display text-3xl md:text-4xl">Enterprise Toolstack</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Category 1 -->
+                <div class="bg-white/5 rounded-lg p-8 hover:bg-white/8 transition-colors border border-white/5">
+                    <h3 class="font-display text-xl mb-6 text-accent">Operational Architecture</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Workflow Automation</span>
+                            <span class="text-muted text-xs text-right">Zapier / Make / n8n / GPTagent</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Knowledge Engines</span>
+                            <span class="text-muted text-xs">Gemini 3.0 / NotebookLM</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Presentation Systems</span>
+                            <span class="text-muted text-xs">Gamma</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="bg-white/5 rounded-lg p-8 hover:bg-white/8 transition-colors border border-white/5">
+                    <h3 class="font-display text-xl mb-6 text-accent">Generative Video</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Google Veo</span>
+                            <span class="text-muted text-xs">Ver. 3.1</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Sora 2 / Kling 2.6</span>
+                            <span class="text-muted text-xs">High-Fidelity Gen</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Runway</span>
+                            <span class="text-muted text-xs">Video Production</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="bg-white/5 rounded-lg p-8 hover:bg-white/8 transition-colors border border-white/5">
+                    <h3 class="font-display text-xl mb-6 text-accent">Voice & Synthesis</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">ElevenLabs</span>
+                            <span class="text-muted text-xs">Voice Cloning</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Cartesia</span>
+                            <span class="text-muted text-xs">Real-Time Audio</span>
+                        </li>
+                        <li class="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <span class="font-medium">Agile Production</span>
+                            <span class="text-muted text-xs">CapCut Enterprise</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24 md:py-32 content-layer">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="line-accent mx-auto mb-6"></div>
+            <h2 class="font-display text-4xl md:text-5xl mb-8">About</h2>
+            <div class="space-y-6 text-muted leading-relaxed text-lg md:text-xl">
+                <p>
+                    I'm a GenAI practitioner who builds workflows that actually get used. My background spans <span class="text-warm-white">curriculum development</span> and <span class="text-warm-white">business operations</span>, which means I think about AI from an outcomes perspective.
+                </p>
+                <p>
+                    When an organization tells me "we tried ChatGPT but it didn't stick," I know exactly why. AI adoption fails when it's treated as a novelty instead of a workflow. I fix that by architecting systems that are reliable, documented, and designed for scale.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 md:py-32 bg-charcoal/50 border-t border-white/5 content-layer">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <p class="text-accent text-xs tracking-[0.3em] uppercase mb-4">Consultation</p>
+            <h2 class="font-display text-4xl md:text-5xl mb-6">Ready to upgrade your operations?</h2>
+            <p class="text-muted text-lg mb-12 max-w-xl mx-auto">
+                Whether you need training for your team, custom workflow design, or help evaluating which AI tools fit your use case.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <a href="mailto:sullivanamy75@gmail.com" class="px-8 py-4 bg-accent text-charcoal font-bold tracking-wide hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20 transition-all rounded-sm">
+                    Email Me
+                </a>
+                <a href="https://www.linkedin.com/in/amy-sullivan-320865141/" target="_blank" class="px-8 py-4 border border-white/20 hover:border-accent/50 hover:text-accent transition-all rounded-sm">
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/5 content-layer">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-muted text-sm">© 2025 Amy Sullivan</p>
+            <p class="text-muted text-sm">Enterprise AI Architect</p>
+        </div>
+    </footer>
+
+    <!-- Canvas Animation Script -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Neural Network Canvas Animation
+        const canvas = document.getElementById('networkCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.3; // Slower, more elegant speed
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 2;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 30) + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Mouse Interaction
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    const forceDirectionX = dx / distance;
+                    const forceDirectionY = dy / distance;
+                    const maxDistance = 200;
+                    
+                    if (distance < maxDistance) {
+                        const force = (maxDistance - distance) / maxDistance;
+                        const directionX = forceDirectionX * force * this.density * 0.6;
+                        const directionY = forceDirectionY * force * this.density * 0.6;
+                        // Gently move away from mouse
+                        this.x -= directionX;
+                        this.y -= directionY;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = 'rgba(201, 162, 39, 0.4)'; // Accent gold color
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            // Calculate particle count based on screen area to prevent overcrowding
+            const particleCount = Math.floor((width * height) / 15000); 
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+                
+                // Draw connections
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 120) { // Connection distance
+                        ctx.strokeStyle = `rgba(201, 162, 39, ${0.15 * (1 - distance / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+
+        resize();
+        initParticles();
+        animate();
+    </script>
+</body>
+</html>
